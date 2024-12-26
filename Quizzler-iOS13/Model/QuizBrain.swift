@@ -28,14 +28,45 @@ struct QuizBrain{
     ]
 //    tracking the question number ==========
     var questionNumber = 0
+//    user score===========
+    var score = 0
     
 //    function to check the answers===
     
-    func checkAnswer(_ userAnswer: String){
+   mutating func checkAnswer(_ userAnswer: String) -> Bool {
         if userAnswer == quiz[questionNumber].answer{
-            
+            score += 1
+            return true
         }else{
-            
+            return false 
         }
     }
+//    get question from the list and display on the ui
+    func getQuestion() -> String{
+        return quiz[questionNumber].text
+    }
+//    updating the progress bar based on user progress
+    func getProgress() -> Float{
+        let progress = Float(questionNumber) / Float(quiz.count)
+        return progress
+    }
+    
+//    this function update the question number
+//    because its a struct the variable can not be modified from scratch
+//    thats why we need to use (mutating key word ) before the function
+    
+    mutating func nextQuestion(){
+        if questionNumber + 1 < quiz.count {
+            questionNumber += 1
+        }else{
+            questionNumber = 0
+            score = 0
+        }
+    }
+    
+    func getScore() -> Int{
+        return score
+    }
+    
+    
 }
